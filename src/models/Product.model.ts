@@ -1,5 +1,23 @@
-import { Table, Column, Model, DataType, Default, PrimaryKey, AutoIncrement } from 'sequelize-typescript'
+import {
+    Table,
+    Column,
+    Model,
+    DataType,
+    Default,
+    PrimaryKey,
+    AutoIncrement
+} from 'sequelize-typescript'
 
+/**
+ * Modelo Sequelize para la tabla `products`.
+ *
+ * Campos sincronizados con el contrato del frontend (Guitar LA):
+ *  - name        → nombre de la guitarra
+ *  - price       → precio numérico con decimales
+ *  - image       → nombre/ruta de la imagen (ej. "guitarra_01")
+ *  - description → descripción larga del producto
+ *  - availability → indicador de disponibilidad (valor por defecto: true)
+ */
 @Table({
     tableName: 'products'
 })
@@ -10,32 +28,42 @@ class Product extends Model {
     @Column({
         type: DataType.INTEGER
     })
-    id: number
+    declare id: number
 
     @Column({
         type: DataType.STRING(100),
         allowNull: false,
-        unique: true // Este es el "candado" para evitar duplicados por nombre
-    }) 
-    name: string
-
-    @Column({                     
-        type: DataType.FLOAT, // Para precios con decimales     
-        allowNull: false
+        unique: true
     })
-    price: number
+    declare name: string
 
     @Column({
-        type: DataType.INTEGER,
+        type: DataType.FLOAT,  // Soporta precios con decimales (ej. 299.99)
         allowNull: false
     })
-    quantity: number
+    declare price: number
 
-    @Default(true)                
+    // ─── Campos requeridos por el frontend (GAP Analysis §6) ───────────────────
+
+    @Column({
+        type: DataType.STRING(255), // Nombre o ruta relativa de la imagen
+        allowNull: true             // Permite insertar productos sin imagen aún
+    })
+    declare image: string
+
+    @Column({
+        type: DataType.TEXT,        // TEXT de PostgreSQL: sin límite de caracteres
+        allowNull: true             // Permite insertar productos sin descripción aún
+    })
+    declare description: string
+
+    // ────────────────────────────────────────────────────────────────────────────
+
+    @Default(true)
     @Column({
         type: DataType.BOOLEAN
     })
-    availability: boolean
+    declare availability: boolean
 }
 
-export default Product;
+export default Product
