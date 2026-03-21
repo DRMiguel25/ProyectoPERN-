@@ -1,0 +1,24 @@
+info:
+  name: Guitarra Borland
+  type: http
+  seq: 5
+
+http:
+  method: POST
+  url: http://localhost:4000/Api/products
+  body:
+    type: json
+    data: |-
+      {
+        "name": "Borland",
+        "image": "guitarra_03",
+        "description": "Morbi ornare augue nisl, vel elementum dui mollis vel. Curabitur non ex id eros fermentum hendrerit.",
+        "price": 329
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
