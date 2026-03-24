@@ -23,7 +23,7 @@ const db = new Sequelize(process.env.DB_URL!, {
     logging: process.env.NODE_ENV !== 'production'
         ? console.log   // Muestra las queries SQL en desarrollo
         : false,        // Silenciado en producción
-    models: [__dirname + '/../models/**/*.ts']
+    models: [__dirname + '/../models/**/*']
 })
 
 export default db
